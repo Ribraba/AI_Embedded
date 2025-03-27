@@ -81,8 +81,8 @@ def evaluate_model_on_STM32(iterations, serial_port):
 
 
 if __name__ == '__main__':
-    X_test = np.load("/Users/ibrahim/Downloads/CNN_C2_16_10/MNIST_xtest_NN_C2_16_10.npy")
-    Y_test = np.load("/Users/ibrahim/Downloads/CNN_C2_16_10/MNIST_ytest_NN_C2_16_10.npy")
+    X_test = np.load("/Users/ibrahim/Desktop/2A/S8/IA & Data/IA Embarquee/Training model/X_test_ai4i.npy")
+    Y_test = np.load("/Users/ibrahim/Desktop/2A/S8/IA & Data/IA Embarquee/Training model/Y_test_ai4i.npy")
 
     with serial.Serial(PORT, 115200, timeout=1) as ser:
         print("Synchronising...")
