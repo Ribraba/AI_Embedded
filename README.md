@@ -43,8 +43,8 @@ Pour exécuter ce projet, les prérequis Python incluent `TensorFlow`, `imbalanc
 ## Structure du projet
 
 ```
-Projet_IA_Embarquee
- ┣ tp_ia_embarquee.py
+IA_Embedded
+ ┣ TP_IA_EMBARQUEE.ipynb
  ┣ UART.py
  ┣ ai4i2020.csv
  ┣ model.tflite
