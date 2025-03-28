@@ -18,7 +18,7 @@ Les données ont été divisées en ensembles d'entraînement et de test. Nous a
 
 ## Modélisation 2 — **Avec équilibrage**
 
-Pour résoudre le problème de déséquilibre des classes, nous avons décomposé le dataset en cas mono-label et multi-label. Nous avons appliqué des techniques d'équilibrage telles que l'undersampling pour réduire le nombre d'échantillons de la classe majoritaire et l'oversampling SMOTE pour augmenter le nombre d'échantillons des classes minoritaires. Un nouveau dataset équilibré a été créé et normalisé. Le même modèle a été réentraîné sur ce dataset équilibré, et l'évaluation a montré une amélioration des performances sur les classes minoritaires, comme en témoignent les nouvelles matrices de confusion.
+Pour résoudre le problème de déséquilibre des classes, nous avons décomposé le dataset en cas mono-label et multi-label. Nous avons appliqué des techniques d'équilibrage telles que l'undersampling pour réduire le nombre d'échantillons de la classe majoritaire et l'oversampling SMOTE pour augmenter le nombre d'échantillons des classes minoritaires. De plus, nous avons utilisé le class weighting pour donner plus de poids aux classes minoritaires. Un nouveau dataset équilibré a été créé et normalisé. Le même modèle a été réentraîné sur ce dataset équilibré, et l'évaluation a montré une amélioration des performances sur les classes minoritaires, comme en témoignent les nouvelles matrices de confusion.
 
 ## Export du modèle et données
 
@@ -30,7 +30,23 @@ Le fichier `.tflite` a été converti dans STM32Cube.AI, et du code C embarqué 
 
 ## Validation embarquée via UART (Python)
 
-Le fichier `UART_y.py` a été utilisé pour valider le modèle embarqué. Le script synchronise la communication UART avec la carte STM32, envoie les données de test, et lit les prédictions renvoyées par le modèle. Les prédictions ont été comparées aux vraies classes pour calculer l'accuracy embarquée, prouvant ainsi que le modèle fonctionne correctement sur la carte.
+Le fichier `UART_y.py` a été utilisé pour valider le modèle embarqué. Le script synchronise la communication UART avec la carte STM32, envoie les données de test, et lit les prédictions renvoyées par le modèle. Les prédictions ont été comparées aux vraies classes pour calculer l'accuracy embarquée, prouvant ainsi que le modèle fonctionne correctement sur la carte. Voici un exemple de sortie après la communication UART :
+
+```
+(base) ibrahim@MacBook-Pro-de-Ibrahim Connextion UART % python UART_Y.py
+Synchronising...
+Synchronised
+Evaluating model on STM32...
+----- Iteration 1 -----
+   Expected output: [1. 0. 0. 0. 0.]
+   Received output: [0.8627450980392157, 0.043137254901960784, 0.00784313725490196, 0.00784313725490196, 0.00392156862745098]
+----------------------- Accuracy: 0.01
+...
+----- Iteration 100 -----
+   Expected output: [1. 0. 0. 0. 0.]
+   Received output: [0.984313725490196, 0.0, 0.0, 0.00392156862745098, 0.0]
+----------------------- Accuracy: 0.96
+```
 
 ## Synthèse des résultats
 
@@ -44,6 +60,23 @@ Pour exécuter ce projet, les prérequis Python incluent `TensorFlow`, `imbalanc
 
 ```
 IA_Embedded
+ ┣ Firmware STM32
+ │ └──Core
+ │ │     ├── Inc
+ │ │     │   ├── main.h
+ │ │     │   └── ...
+ │ │     ├── Src
+ │ │     │   ├── main.c
+ │ │     │   └── ...
+ │ │     └── Startup
+ │ │         └── startup_stm32l4r9aiix.s
+ │ │     ├── IA Embarquee.ioc
+ │ │     ├── X-CUBE-AI
+ │ │         ├── App
+ │ │         │   ├── app_x-cube-ai.c
+ │ │         │   ├── app_x-cube-ai.h
+ │ │         └── └── ...
+ │ └── ...
  ┣ TP_IA_EMBARQUEE.ipynb
  ┣ UART.py
  ┣ ai4i2020.csv
